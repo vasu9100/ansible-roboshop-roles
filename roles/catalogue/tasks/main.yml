@@ -49,6 +49,6 @@
     var: count_result.stdout_lines
 
 - name: Insert data if count is 0
-  # Your insertion task here
-  shell: "mongo --host mongodb.gonepudirobot.online < /app/schema/catalogue.js
+      # Your insertion task here
+  shell: "mongo --host mongodb.gonepudirobot.online --quiet < /app/schema/catalogue.js"
   when: count_result.stdout|int == 0
