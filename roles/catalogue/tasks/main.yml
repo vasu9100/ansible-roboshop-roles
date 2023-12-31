@@ -44,7 +44,4 @@
 #   ignore_errors: true
   #register: mongo_check_result
 - name: LOAD DATA INTO MONGODB IF IT DOESN'T EXIST
-  command: mongo --host mongodb.gonepudirobot.online < /app/schema/catalogue.js
-
-      
-handlers:    
+  command: mongo --host mongodb.gonepudirobot.online < /app/schema/{{component}}.js  
