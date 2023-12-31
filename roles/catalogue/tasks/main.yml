@@ -33,7 +33,7 @@
   notify: ENABLE CATALOGUE
 - name: COPYING MONGO.REPO
   copy:
-    src: /home/centos/ansible-roboshop/mongo.repo
+    src: mongo.repo
     dest: /etc/yum.repos.d/
 - name: INSTALLAING MONGO SHELL
   dnf:
