@@ -1,0 +1,50 @@
+---
+- name: DISABLE OLD AND ENABLE NODE JS LATEST VERSION
+  command: "{{ item }}"
+  loop:
+    - dnf module disable nodejs -y
+    - dnf module enable nodejs:18 -y
+    - dnf install nodejs -y
+- name: CREATING ROBOSHOP USER
+  user:
+    name: roboshop
+- name: CREATING APP DIRECTORY
+  file:
+    path : /app
+    state: directory
+    mode: 0777
+- name: DOWNLOADING CATALOGUE CODE
+  get_url:
+    url: https://roboshop-builds.s3.amazonaws.com/{{component}}.zip
+    dest: /tmp
+- name: UNZIPPING CODE
+  unarchive:
+    src: /tmp/{{component}}.zip
+    dest: /app
+    remote_src: yes
+- name: NPM INSTALLATION PART
+  command: npm install
+  args:
+    chdir: /app
+- name: COPYING CATALOGUE.SERVICE
+  copy:
+    src: "{{component}}.service"
+    dest: /etc/systemd/system/{{component}}.service
+  notify: ENABLE CATALOGUE
+- name: COPYING MONGO.REPO
+  copy:
+    src: /home/centos/ansible-roboshop/mongo.repo
+    dest: /etc/yum.repos.d/
+- name: INSTALLAING MONGO SHELL
+  dnf:
+    name: mongodb-org-shell
+    state: present
+# - name: CHECK IF DATA EXISTS IN MONGODB
+#   command: mongo --host mongodb.gonepudirobot.online --quiet --eval "db.catalogue.countDocuments({})"
+#   ignore_errors: true
+  #register: mongo_check_result
+- name: LOAD DATA INTO MONGODB IF IT DOESN'T EXIST
+  command: mongo --host mongodb.gonepudirobot.online < /app/schema/catalogue.js
+
+      
+handlers:    

@@ -1,0 +1,7 @@
+---
+- name: ENABLE CATALOGUE
+  command: "{{item}}"
+  loop:
+    - systemctl daemon-reload
+    - systemctl enable catalogue
+    - systemctl start catalogue
