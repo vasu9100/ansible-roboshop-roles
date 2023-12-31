@@ -1,0 +1,16 @@
+[web]
+gonepudirobot.online
+[catalogue]
+catalogue.gonepudirobot.online
+[mongo-db]
+mongodb.gonepudirobot.online
+[users]
+user.gonepudirobot.online
+[redis]
+redis.gonepudirobot.online
+[cart]
+cart.gonepudirobot.online
+[mysql]
+mysql.gonepudirobot.online
+[shipping]
+shipping.gonepudirobot.online
