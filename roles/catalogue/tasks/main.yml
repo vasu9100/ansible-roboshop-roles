@@ -46,5 +46,5 @@
   register: mongo_check_result
 - name: LOAD DATA INTO MONGODB IF IT DOESN'T EXIST
   command: mongo --host mongodb.gonepudirobot.online < /app/schema/{{component}}.js
-  when: mongo_check_result.stdout == "0" and mongo_check_result.rc == 0
+  failed_when: "'E11000 duplicate key' not in mongo_result.stderr"
   ignore_errors: true
