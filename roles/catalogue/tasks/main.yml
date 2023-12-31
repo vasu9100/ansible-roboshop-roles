@@ -28,7 +28,7 @@
     chdir: /app
 - name: COPYING CATALOGUE.SERVICE
   copy:
-    src: "{{component}}.service"
+    src: "{{component}}".service
     dest: /etc/systemd/system/{{component}}.service
   notify: ENABLE CATALOGUE
 - name: COPYING MONGO.REPO
