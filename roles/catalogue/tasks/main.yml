@@ -40,11 +40,15 @@
   dnf:
     name: mongodb-org-shell
     state: present
-- name: CHECK IF DATA EXISTS IN MONGODB
-  command: mongo --host mongodb.gonepudirobot.online --quiet --eval "db.catalogue.countDocuments({})"
-  ignore_errors: true
-  register: mongo_check_result
-- name: LOAD DATA INTO MONGODB IF IT DOESN'T EXIST
-  command: mongo --host mongodb.gonepudirobot.online < /app/schema/{{component}}.js
-  failed_when: "'E11000 duplicate key' not in mongo_result.stderr"
-  ignore_errors: true
+- name: Execute MongoDB countDocuments command
+  shell: "mongo --host mongodb.gonepudirobot.online --quiet --eval 'db.catalogue.countDocuments({})'"
+  register: count_result
+
+- name: Print count result
+  debug:
+    var: count_result.stdout_lines
+
+- name: Insert data if count is 0
+  # Your insertion task here
+  shell: "mongo --host mongodb.gonepudirobot.online < /app/schema/catalogue.js
+  when: count_result.stdout|int == 0
