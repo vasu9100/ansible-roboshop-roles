@@ -30,7 +30,7 @@
   copy:
     src: catalogue.service
     dest: /etc/systemd/system/{{component}}.service
-  #notify: ENABLE CATALOGUE
+  notify: ENABLE CATALOGUE
 
 - name: ENABLE CATALOGUE
   command: "{{item}}"
@@ -52,5 +52,5 @@
   register: mongo_check_result
 - name: LOAD DATA INTO MONGODB IF IT DOESN'T EXIST
   command: mongo --host mongodb.gonepudirobot.online < /app/schema/{{component}}.js
-  when: mongo_check_result= "0"
+  when: mongo_check_result.stdout == "0"
   ignore_errors: true

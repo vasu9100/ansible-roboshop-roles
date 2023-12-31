@@ -1,0 +1,7 @@
+- name: ENABLE CATALOGUE
+  debug:
+    msg: "Handler ENABLE CATALOGUE is being executed."
+  loop:
+    - systemctl daemon-reload
+    - systemctl enable catalogue
+    - systemctl start catalogue
